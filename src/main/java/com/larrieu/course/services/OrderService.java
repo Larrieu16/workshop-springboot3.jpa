@@ -2,24 +2,25 @@ package com.larrieu.course.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.larrieu.course.entities.Order;
+import com.larrieu.course.repositories.OrderRepository;
 
-import com.larrieu.course.entities.User;
-import com.larrieu.course.repositories.UserRepository;
 
 
 @Service
-public class UserService {
+public class OrderService {
 	
 	@Autowired
-	private UserRepository repository;
-	public List<User> findAll(){
+	private OrderRepository repository;
+	
+	public List<Order> findAll(){
 		return repository.findAll();
 	}
-	public User findById(Long id) {
-		Optional<User> obj = repository.findById(id);
+	
+	public Order findById(Long id) {
+		Optional<Order> obj = repository.findById(id);
 		return obj.get();
 	}
 }
