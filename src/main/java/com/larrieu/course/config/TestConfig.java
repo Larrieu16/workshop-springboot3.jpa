@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.larrieu.course.entities.Category;
 import com.larrieu.course.entities.Order;
+import com.larrieu.course.entities.OrderItem;
 import com.larrieu.course.entities.Product;
 import com.larrieu.course.entities.User;
 import com.larrieu.course.entities.enums.OrderStatus;
 import com.larrieu.course.repositories.CategoryRepository;
+import com.larrieu.course.repositories.OrderItemRepository;
 import com.larrieu.course.repositories.OrderRepository;
 import com.larrieu.course.repositories.ProductRepository;
 import com.larrieu.course.repositories.UserRepository;
@@ -22,15 +24,17 @@ import com.larrieu.course.repositories.UserRepository;
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
 	
+	//Baixo acoplamento. Injecao de dependencia
 	@Autowired
 	private UserRepository userRepository;
-	//Baixo acoplamento. Injecao de dependencia
 	@Autowired
 	private OrderRepository orderRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -63,6 +67,13 @@ public class TestConfig implements CommandLineRunner{
 		p4.getCategories().add(cat3);
 		p5.getCategories().add(cat2);
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 		
 		
 	}
